@@ -10,23 +10,13 @@ import './App.css';
 
 class App extends Component {
   state = {
-    todos: [
-        {
-          id: uuidv4(),
-          title: "Setup react application.",
-          completed: false
-        },
-        {
-          id: uuidv4(),
-          title: "Learn the basics.",
-          completed: false
-        },
-        {
-          id: uuidv4(),
-          title: "Style it.",
-          completed: false
-        }
-    ]
+    todos: []
+  }
+
+  //same as documentReady in jquery
+  componentDidMount() {
+    axios.get('http://jsonplaceholder.typicode.com/todos?_limit=10')
+    .then(res => this.setState({ todos: res.data }))
   }
 
   // mark compplete
@@ -42,18 +32,25 @@ class App extends Component {
   }
 
   delTodo = (id) => {
-    this.setState({
-      todos: [...this.state.todos.filter(todo => todo.id !== id)]
-    });
+    axios.delete(`http://jsonplaceholder.typicode.com/todos/${id}`)
+    .then(res => 
+      this.setState({
+        todos: [...this.state.todos.filter(todo => todo.id !== id)]
+      })
+    );
   }
 
   addTodo = (title) => {
-    const newTodo = {
-      id: uuidv4(),
+    //const newTodo = {
+    //  title: title,
+    //  completed: false
+    //};
+    //this.setState({ todos: [...this.state.todos, newTodo] });
+    axios.post('http://jsonplaceholder.typicode.com/todos', {
       title: title,
       completed: false
-    };
-    this.setState({ todos: [...this.state.todos, newTodo] });
+    })
+    .then(res => this.setState({ todos: [...this.state.todos, res.data]}))
   }
 
   render() {
@@ -63,7 +60,7 @@ class App extends Component {
           <Header />
           <Route
             exact
-            path="/" 
+            path="/React-TodoList" 
             render={props => (
               <React.Fragment>
                 <div className="container">

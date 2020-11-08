@@ -29,7 +29,7 @@ export class AddTodo extends Component {
           value={this.state.title}
           style={{flex: '10', padding: '20px'}}
         />
-        <input type="submit" value="Submit" class="btn" style={{width: '140px'}} />
+        <input type="submit" value="Submit" className="btn" style={{width: '140px'}} />
       </form>
     )
   }
