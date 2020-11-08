@@ -7,7 +7,7 @@ export class AddTodo extends Component {
   
   onSubmit = (e) => {
     e.preventDefault();
-    if (this.state.title != '') {
+    if (this.state.title !== '') {
       this.props.addTodo(this.state.title);
       this.setState({ title: '' });
     }
@@ -15,7 +15,7 @@ export class AddTodo extends Component {
 
   onChange = (e) => {
     this.setState({
-      title: e.target.value
+      [e.target.name]: e.target.value
     })
   }
   render() {
